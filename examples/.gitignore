@@ -1,0 +1,9 @@
+# Don't track the contents of these folders
+__pycache__/
+.settings/
+
+# Files
+
+.project
+.pydevproject
+
