@@ -1,6 +1,7 @@
 '''
 Created on Dec 16, 2018
-
+class: Order_list inherits the Order_list_ui
+    adds functionality to the GUI
 @author: jesse
 '''
 from PyQt5 import QtCore, QtGui, QtWidgets

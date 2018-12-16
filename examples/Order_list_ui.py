@@ -5,6 +5,12 @@
 # Created by: PyQt5 UI code generator 5.11.3
 #
 # WARNING! All changes made in this file will be lost!
+'''
+Ui_OrderWidget is a parent class that only handles the front end of the program
+    all functionality is created by child class in Driver.py
+
+'''
+
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
