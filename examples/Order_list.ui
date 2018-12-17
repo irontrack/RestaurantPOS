@@ -13,6 +13,14 @@
   <property name="windowTitle">
    <string>Order Menu</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog{
+background:qlineargradient(spread:pad, x1:0.166, y1:0.915091, x2:0.517, y2:0.0457727, stop:0 rgba(0, 81, 0, 255), stop:1 rgba(255, 255, 255, 255))
+}
+QPushButton{
+background:qradialgradient(spread:pad, cx:0.504739, cy:1, radius:0.666639, fx:0.499564, fy:1, stop:0.146919 rgba(0, 112, 238, 255), stop:1 rgba(255, 255, 255, 255))
+}</string>
+  </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
     <widget class="QListWidget" name="listWidget"/>

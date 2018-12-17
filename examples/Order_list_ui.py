@@ -5,19 +5,20 @@
 # Created by: PyQt5 UI code generator 5.11.3
 #
 # WARNING! All changes made in this file will be lost!
-'''
-Ui_OrderWidget is a parent class that only handles the front end of the program
-    all functionality is created by child class in Driver.py
-
-'''
-
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QInputDialog
 
 class Ui_OrderWidget(object):
     def setupUi(self, OrderWidget):
         OrderWidget.setObjectName("OrderWidget")
         OrderWidget.resize(748, 568)
+        OrderWidget.setStyleSheet("QDialog{\n"
+"background:qlineargradient(spread:pad, x1:0.166, y1:0.915091, x2:0.517, y2:0.0457727, stop:0 rgba(0, 81, 0, 255), stop:1 rgba(255, 255, 255, 255))\n"
+"}\n"
+"QPushButton{\n"
+"background:qradialgradient(spread:pad, cx:0.504739, cy:1, radius:0.666639, fx:0.499564, fy:1, stop:0.146919 rgba(0, 112, 238, 255), stop:1 rgba(255, 255, 255, 255))\n"
+"}")
         self.horizontalLayout = QtWidgets.QHBoxLayout(OrderWidget)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.listWidget = QtWidgets.QListWidget(OrderWidget)
@@ -55,10 +56,11 @@ class Ui_OrderWidget(object):
         self.remove.setObjectName("remove")
         self.verticalLayout.addWidget(self.remove)
         self.horizontalLayout.addLayout(self.verticalLayout)
-
+        
         self.retranslateUi(OrderWidget)
         QtCore.QMetaObject.connectSlotsByName(OrderWidget)
-
+    
+          
     def retranslateUi(self, OrderWidget):
         _translate = QtCore.QCoreApplication.translate
         OrderWidget.setWindowTitle(_translate("OrderWidget", "Order Menu"))
