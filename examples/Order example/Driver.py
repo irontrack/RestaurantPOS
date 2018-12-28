@@ -4,8 +4,10 @@ class: Order_list inherits the Order_list_ui
     adds functionality to the GUI
 @author: jesse
 '''
+
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QInputDialog
+from PyQt5.QtCore import QVariant
+from PyQt5.QtWidgets import QListWidgetItem
 from Order_list_ui import Ui_OrderWidget 
 
 
@@ -24,7 +26,10 @@ class Order_list(Ui_OrderWidget):
         row = self.listWidget.currentRow()
         ok = QtWidgets.QMessageBox.question(self.Dialog,"message box","would you like to add Beer?")
         if ok == QtWidgets.QMessageBox.Yes:
-            self.listWidget.insertItem(row + 1,"Beer")
+            beer = QVariant(self.thing('beer',5.99))
+            print(beer.toString())
+            item = QListWidgetItem(beer.toString())
+            self.listWidget.insertItem(row + 1,item)
             self.listWidget.setCurrentRow(row + 1)
     def add_Churro(self):
         row = self.listWidget.currentRow()
@@ -65,7 +70,16 @@ class Order_list(Ui_OrderWidget):
             row = row + 1
             self.listWidget.insertItem(row,item)
             self.listWidget.setCurrentRow(row)
-                 
+    class thing():
+        def __init__(self,name,value):
+            self.name = name
+            self.value = value
+        def __str__(self):
+            
+            return f'{self.name}                {self.value}'
+            
+        
+                   
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
