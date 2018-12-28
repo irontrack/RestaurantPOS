@@ -91,7 +91,7 @@
              <enum>QLayout::SetDefaultConstraint</enum>
             </property>
             <item>
-             <widget class="QPushButton" name="New_Table_btn">
+             <widget class="QPushButton" name="newTable_btn">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
                 <horstretch>0</horstretch>
@@ -104,7 +104,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="mod_tbl_btn">
+             <widget class="QPushButton" name="modifyTable_btn">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
                 <horstretch>0</horstretch>
@@ -117,7 +117,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_3">
+             <widget class="QPushButton" name="toGoOrder_btn">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
                 <horstretch>0</horstretch>
@@ -494,28 +494,28 @@
             <item>
              <layout class="QVBoxLayout" name="verticalLayout_8">
               <item>
-               <widget class="QPushButton" name="App_menu">
+               <widget class="QPushButton" name="appetizers_btn">
                 <property name="text">
                  <string>Appetizers</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="Ent_menu">
+               <widget class="QPushButton" name="entrees_btn">
                 <property name="text">
                  <string>Entrees</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="Drk_menu">
+               <widget class="QPushButton" name="drinks_btn">
                 <property name="text">
                  <string>Drinks</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="Des_menu">
+               <widget class="QPushButton" name="desserts_btn">
                 <property name="text">
                  <string>Desserts</string>
                 </property>
@@ -535,6 +535,20 @@
                </size>
               </property>
              </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="remove_btn">
+              <property name="text">
+               <string>Remove</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="finished_btn">
+              <property name="text">
+               <string>Finished</string>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
