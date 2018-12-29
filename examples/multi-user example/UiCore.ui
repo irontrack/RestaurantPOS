@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>862</width>
-    <height>581</height>
+    <width>788</width>
+    <height>584</height>
    </rect>
   </property>
   <property name="font">
@@ -555,19 +555,19 @@
           <item>
            <widget class="QStackedWidget" name="stackedWidget_2">
             <property name="currentIndex">
-             <number>3</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="Appetizers">
              <layout class="QVBoxLayout" name="verticalLayout_10" stretch="1,9">
               <item>
-               <widget class="QFrame" name="frame_7">
+               <widget class="QFrame" name="frame_15">
                 <property name="frameShape">
                  <enum>QFrame::StyledPanel</enum>
                 </property>
                 <property name="frameShadow">
                  <enum>QFrame::Raised</enum>
                 </property>
-                <layout class="QHBoxLayout" name="horizontalLayout_6">
+                <layout class="QHBoxLayout" name="horizontalLayout_9">
                  <item alignment="Qt::AlignHCenter">
                   <widget class="QLabel" name="App_lbl">
                    <property name="text">
@@ -579,26 +579,14 @@
                </widget>
               </item>
               <item>
-               <widget class="QFrame" name="frame_8">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>52</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>379</width>
-                  <height>408</height>
-                 </size>
-                </property>
+               <widget class="QFrame" name="frame_16">
                 <property name="frameShape">
                  <enum>QFrame::StyledPanel</enum>
                 </property>
                 <property name="frameShadow">
                  <enum>QFrame::Raised</enum>
                 </property>
-                <layout class="QGridLayout" name="gridLayout_2">
+                <layout class="QGridLayout" name="gridLayout_6">
                  <item row="0" column="1">
                   <widget class="QPushButton" name="Guacamole_btn">
                    <property name="text">
@@ -606,17 +594,17 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="2">
-                  <widget class="QPushButton" name="Toastadas_btn">
-                   <property name="text">
-                    <string>Toastadas</string>
-                   </property>
-                  </widget>
-                 </item>
                  <item row="0" column="0">
                   <widget class="QPushButton" name="Chips_btn">
                    <property name="text">
                     <string>Chips</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="2">
+                  <widget class="QPushButton" name="Toastadas">
+                   <property name="text">
+                    <string>Toastadas</string>
                    </property>
                   </widget>
                  </item>
