@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>788</width>
-    <height>584</height>
+    <width>868</width>
+    <height>553</height>
    </rect>
   </property>
   <property name="font">
@@ -27,7 +27,7 @@
       </font>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="user_select">
       <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -540,6 +540,13 @@
              <widget class="QPushButton" name="remove_btn">
               <property name="text">
                <string>Remove</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="CancelOrder_btn">
+              <property name="text">
+               <string>Cancel</string>
               </property>
              </widget>
             </item>

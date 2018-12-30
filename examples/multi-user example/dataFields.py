@@ -12,16 +12,16 @@ class user():
         
         
 class menuItem():
-    def __init__(self, name, cost, index):
+    def __init__(self, name, cost, index = 0):
         self.name = name
         self.cost = cost
         self.index = index
     def __str__(self):
         return f"{self.name}            ${self.cost}"
 class tableOrder():
-    def __init__(self, listIndex):
+    def __init__(self, m_user):
         self.menuItems = []
-        self.listIndex = listIndex
+        self.m_user = m_user
         self.m_subTotal = 0
     def subTotal(self):
         return sum(m.cost for m in self.menuItems)

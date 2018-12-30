@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainDialog(object):
     def setupUi(self, MainDialog):
         MainDialog.setObjectName("MainDialog")
-        MainDialog.resize(788, 584)
+        MainDialog.resize(868, 553)
         font = QtGui.QFont()
         font.setPointSize(14)
         MainDialog.setFont(font)
@@ -323,6 +323,9 @@ class Ui_MainDialog(object):
         self.remove_btn = QtWidgets.QPushButton(self.frame_6)
         self.remove_btn.setObjectName("remove_btn")
         self.verticalLayout_9.addWidget(self.remove_btn)
+        self.CancelOrder_btn = QtWidgets.QPushButton(self.frame_6)
+        self.CancelOrder_btn.setObjectName("CancelOrder_btn")
+        self.verticalLayout_9.addWidget(self.CancelOrder_btn)
         self.finished_btn = QtWidgets.QPushButton(self.frame_6)
         self.finished_btn.setObjectName("finished_btn")
         self.verticalLayout_9.addWidget(self.finished_btn)
@@ -502,6 +505,7 @@ class Ui_MainDialog(object):
         self.drinks_btn.setText(_translate("MainDialog", "Drinks"))
         self.desserts_btn.setText(_translate("MainDialog", "Desserts"))
         self.remove_btn.setText(_translate("MainDialog", "Remove"))
+        self.CancelOrder_btn.setText(_translate("MainDialog", "Cancel"))
         self.finished_btn.setText(_translate("MainDialog", "Finished"))
         self.App_lbl.setText(_translate("MainDialog", "Appetizers"))
         self.Guacamole_btn.setText(_translate("MainDialog", "Guacamole"))
