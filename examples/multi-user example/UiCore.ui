@@ -18,6 +18,9 @@
   <property name="windowTitle">
    <string>Point of Sales System</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
@@ -27,7 +30,7 @@
       </font>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="user_select">
       <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -609,7 +612,7 @@
                   </widget>
                  </item>
                  <item row="0" column="2">
-                  <widget class="QPushButton" name="Toastadas">
+                  <widget class="QPushButton" name="Toastadas_btn">
                    <property name="text">
                     <string>Toastadas</string>
                    </property>

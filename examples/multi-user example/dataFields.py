@@ -17,7 +17,7 @@ class menuItem():
         self.cost = cost
         self.index = index
     def __str__(self):
-        return f"{self.name}            ${self.cost}"
+        return '{0:=<20s}  {1:>5.2f}'.format(self.name,self.cost)
 class tableOrder():
     def __init__(self, m_user):
         self.menuItems = []

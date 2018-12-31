@@ -10,9 +10,10 @@ class UiFunctional(Ui_MainDialog):
         self.createUsers()
         self.currentUser = None
         self.currentOrder = None
+        self.modTable = False
         
         #connect user select push buttons
-        self.toGoOrder_btn.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(2))
+        self.toGoOrder_btn.clicked.connect(self.toGoOrder_pushed)
         self.newTable_btn.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(1))
         self.modifyTable_btn.clicked.connect(self.modTable_pushed)
         
@@ -32,23 +33,48 @@ class UiFunctional(Ui_MainDialog):
         self.enter_btn.clicked.connect(lambda:self.enter_pushed(self.lineEdit.text()))
         
         #connect order push buttons
+        
         # connect appetizer buttons
         self.appetizers_btn.clicked.connect(lambda:self.stackedWidget_2.setCurrentIndex(0))
-        self.Chips_btn.clicked.connect(lambda:self.addItem("Chips",3.99))
+        self.Chips_btn.clicked.connect(lambda:self.addItem("Chips ",3.99))
+        self.Guacamole_btn.clicked.connect(lambda:self.addItem("Guacamole ",5.99))
+        self.Toastadas_btn.clicked.connect(lambda:self.addItem("Toastadas ",5.99))
+        # connect entrees buttons
         self.entrees_btn.clicked.connect(lambda:self.stackedWidget_2.setCurrentIndex(1))
+        self.Burrito_btn.clicked.connect(lambda:self.addItem("Burrito", 8.99))
+        self.Tacos_btn.clicked.connect(lambda:self.addItem("Tacos", 6.99))
+        self.Salad_btn.clicked.connect(lambda:self.addItem("Salad", 8.99))
+        # connect drinks buttons
         self.drinks_btn.clicked.connect(lambda:self.stackedWidget_2.setCurrentIndex(2))
+        self.Horchata_btn.clicked.connect(lambda:self.addItem("Horchata", 2.99))
+        self.Cerveza_btn.clicked.connect(lambda:self.addItem("Cerveza", 4.99))
+        self.Jarritos_btn.clicked.connect(lambda:self.addItem("Jarritos", 1.99))
+        #connect desserts buttons        
         self.desserts_btn.clicked.connect(lambda:self.stackedWidget_2.setCurrentIndex(3))
+        self.Churro_btn.clicked.connect(lambda:self.addItem("Churro",2.99))
+        self.Flan_btn.clicked.connect(lambda:self.addItem("Flan",4.99))
+        #connect final order menu buttons
         self.CancelOrder_btn.clicked.connect(self.cancelOrder_pushed)
-        self.finished_btn.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
-    
+        self.finished_btn.clicked.connect(self.finished_pushed)
+        self.remove_btn.clicked.connect(self.remove_pushed)
+        
+    def toGoOrder_pushed(self):
+        newOrder = tableOrder(self.m_users[0])
+        self.currentOrder = newOrder
+        self.currentUser = self.m_users[0]
+        self.stackedWidget.setCurrentIndex(2)
+        
     def modTable_pushed(self):
         if self.listWidget.count() == 0:
             QtWidgets.QMessageBox.about(self.mainDialog,"warning","No Orders to Modify")
         else:
             index = self.listWidget.currentRow()
-            self.currentOrder == self.m_orders[index]
-            self.currentUser == self.currentOrder.m_user
+            self.currentOrder = self.m_orders[index]
+            self.currentUser = self.currentOrder.m_user
             self.stackedWidget.setCurrentIndex(2)
+            self.modTable = True
+            for item in self.currentOrder.menuItems:
+                self.listWidget_2.addItem(str(item))
         
             
            
@@ -94,8 +120,28 @@ class UiFunctional(Ui_MainDialog):
         self.listWidget_2.addItem(str(m_menuItem))
         self.listWidget_2.setCurrentRow(index + 1) 
             
-        
-    
+    def remove_pushed(self):    
+        index = self.listWidget_2.currentRow()
+        if index <= self.listWidget_2.count():
+            del self.currentOrder.menuItems[index]
+            self.listWidget_2.takeItem(index)
+    def finished_pushed(self):
+        if self.listWidget_2.count() == 0:
+            self.cancelOrder_pushed()
+        else:
+            if not self.modTable: 
+                newOrder = self.currentOrder
+                self.currentUser.tableOrders.append(newOrder)
+                self.m_orders.append(self.currentOrder)
+                numberOfOrders = len(self.m_orders)
+                self.listWidget.addItem(str(f"order number {numberOfOrders}"))
+            else:
+                index = self.listWidget.currentRow()
+                self.m_orders[index] = self.currentOrder    
+            self.listWidget_2.clear()
+            self.currentOrder = None
+            self.currentUser = None
+            self.stackedWidget.setCurrentIndex(0)
    
 if __name__ == "__main__":
     import sys
