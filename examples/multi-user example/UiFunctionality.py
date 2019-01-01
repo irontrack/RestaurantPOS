@@ -97,9 +97,11 @@ class UiFunctional(Ui_MainDialog):
     def enter_pushed(self,pin):
         if self.currentOrder == None and self.isUser(pin):
             self.currentUser = self.addUser(pin) 
+            self.lineEdit.clear()
             self.stackedWidget.setCurrentIndex(2)
             self.currentOrder = tableOrder(self.currentUser)
         elif pin == self.currentUser.pin:
+            self.lineEdit.clear()
             self.stackedWidget.setCurrentIndex(2)
         else:
             self.lineEdit.clear()
@@ -156,7 +158,8 @@ class UiFunctional(Ui_MainDialog):
                 self.listWidget.addItem(str(f"order number {numberOfOrders}"))
             else:
                 index = self.listWidget.currentRow()
-                self.m_orders[index] = self.currentOrder    
+                self.m_orders[index] = self.currentOrder
+                self.modTable = False    
             self.listWidget_2.clear()
             self.currentOrder = None
             self.currentUser = None
