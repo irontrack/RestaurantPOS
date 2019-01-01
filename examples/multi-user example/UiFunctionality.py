@@ -1,9 +1,9 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from UiCore import Ui_MainDialog
+from UiCore import Ui_MainWindow
 from dataFields import user,menuItem,tableOrder
-class UiFunctional(Ui_MainDialog):
+class UiFunctional(Ui_MainWindow):
     def __init__(self):
-        self.mainDialog = QtWidgets.QDialog()
+        self.mainDialog = QtWidgets.QMainWindow()
         self.setupUi(self.mainDialog)
         self.m_orders = []
         self.m_users = []
