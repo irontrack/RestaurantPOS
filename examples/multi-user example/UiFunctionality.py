@@ -117,14 +117,33 @@ class UiFunctional(Ui_MainDialog):
         index = self.listWidget_2.currentRow()
         m_menuItem = menuItem(m_name,m_cost,index)
         self.currentOrder.menuItems.append(m_menuItem)
-        self.listWidget_2.addItem(str(m_menuItem))
-        self.listWidget_2.setCurrentRow(index + 1) 
+        self.listWidget_2.insertItem(index,str(m_menuItem))
+        self.listWidget_2.setCurrentRow(index + 1)
+        temp = self.currentOrder.subTotal()
+        if self.listWidget_2.count() == len(self.currentOrder.menuItems):
+            self.listWidget_2.addItem("=========================")
+            self.listWidget_2.addItem(f"Sub-Total ======= {temp}")
+        else:
+            index = self.listWidget_2.count() - 1
+            self.listWidget_2.takeItem(index)
+            self.listWidget_2.addItem(f"Sub-Total ======= {temp}") 
             
     def remove_pushed(self):    
         index = self.listWidget_2.currentRow()
-        if index <= self.listWidget_2.count():
+        if index < self.listWidget_2.count() and not len(self.currentOrder.menuItems) == 0:
             del self.currentOrder.menuItems[index]
             self.listWidget_2.takeItem(index)
+            self.listWidget_2.setCurrentRow(index - 1)
+        temp = self.currentOrder.subTotal()
+        if self.listWidget_2.count() == len(self.currentOrder.menuItems):
+            self.listWidget_2.addItem("=========================")
+            self.listWidget_2.addItem(f"Sub-Total ======= {temp}")
+        elif len(self.currentOrder.menuItems) == 0:
+            self.listWidget_2.clear()
+        else:
+            index = self.listWidget_2.count() - 1
+            self.listWidget_2.takeItem(index)
+            self.listWidget_2.addItem(f"Sub-Total ======= {temp}")
     def finished_pushed(self):
         if self.listWidget_2.count() == 0:
             self.cancelOrder_pushed()
