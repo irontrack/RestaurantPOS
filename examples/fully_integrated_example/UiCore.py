@@ -329,6 +329,8 @@ class Ui_MainWindow(object):
         self.finished_btn.setObjectName("finished_btn")
         self.verticalLayout_9.addWidget(self.finished_btn)
         self.horizontalLayout_5.addLayout(self.verticalLayout_9)
+        #begin stacked_2 setup
+        #begin appetizer widget setup
         self.stackedWidget_2 = QtWidgets.QStackedWidget(self.frame_6)
         self.stackedWidget_2.setObjectName("stackedWidget_2")
         self.Appetizers = QtWidgets.QWidget()
@@ -364,6 +366,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_10.setStretch(0, 1)
         self.verticalLayout_10.setStretch(1, 9)
         self.stackedWidget_2.addWidget(self.Appetizers)
+        #end appetizer widget setup
+        
         self.Entrees = QtWidgets.QWidget()
         self.Entrees.setObjectName("Entrees")
         self.verticalLayout_13 = QtWidgets.QVBoxLayout(self.Entrees)
