@@ -23,7 +23,7 @@
        </font>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="user_select">
        <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -582,36 +582,14 @@
                 </widget>
                </item>
                <item>
-                <widget class="QFrame" name="frame_16">
+                <widget class="QFrame" name="appBtn_frm">
                  <property name="frameShape">
                   <enum>QFrame::StyledPanel</enum>
                  </property>
                  <property name="frameShadow">
                   <enum>QFrame::Raised</enum>
                  </property>
-                 <layout class="QGridLayout" name="gridLayout_6">
-                  <item row="0" column="1">
-                   <widget class="QPushButton" name="Guacamole_btn">
-                    <property name="text">
-                     <string>Guacamole</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="0">
-                   <widget class="QPushButton" name="Chips_btn">
-                    <property name="text">
-                     <string>Chips</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="2">
-                   <widget class="QPushButton" name="Toastadas_btn">
-                    <property name="text">
-                     <string>Toastadas</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
+                 <layout class="QGridLayout" name="gridLayout_6"/>
                 </widget>
                </item>
               </layout>
@@ -794,7 +772,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>25</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
