@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from UiCore import Ui_MainWindow
+from UiCoreTest import Ui_MainWindow
 from dataFields import user,menuItem,tableOrder
 class UiFunctional(Ui_MainWindow):
     def __init__(self):
@@ -35,17 +35,17 @@ class UiFunctional(Ui_MainWindow):
         #connect order push buttons
         
         # connect appetizer buttons
-        self.appetizers_btn.clicked.connect(lambda:self.stackedWidget_2.setCurrentIndex(0))
+        self.Appetizers_btn.clicked.connect(lambda:self.stackedWidget_2.setCurrentIndex(0))
         self.Chips_btn.clicked.connect(lambda:self.addItem("Chips ",3.99))
         self.Guacamole_btn.clicked.connect(lambda:self.addItem("Guacamole ",5.99))
         self.Toastadas_btn.clicked.connect(lambda:self.addItem("Toastadas ",5.99))
         # connect entrees buttons
-        self.entrees_btn.clicked.connect(lambda:self.stackedWidget_2.setCurrentIndex(1))
+        self.Entrees_btn.clicked.connect(lambda:self.stackedWidget_2.setCurrentIndex(1))
         self.Burrito_btn.clicked.connect(lambda:self.addItem("Burrito", 8.99))
         self.Tacos_btn.clicked.connect(lambda:self.addItem("Tacos", 6.99))
         self.Salad_btn.clicked.connect(lambda:self.addItem("Salad", 8.99))
         # connect drinks buttons
-        self.drinks_btn.clicked.connect(lambda:self.stackedWidget_2.setCurrentIndex(2))
+        self.Drinks_btn.clicked.connect(lambda:self.stackedWidget_2.setCurrentIndex(2))
         self.Horchata_btn.clicked.connect(lambda:self.addItem("Horchata", 2.99))
         self.Cerveza_btn.clicked.connect(lambda:self.addItem("Cerveza", 4.99))
         self.Jarritos_btn.clicked.connect(lambda:self.addItem("Jarritos", 1.99))
