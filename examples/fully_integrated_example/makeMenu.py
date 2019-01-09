@@ -87,7 +87,7 @@ class addButtons():
             mainWindow.gLayouts.append(QtWidgets.QGridLayout(mainWindow.menuFrames[i]))
             mainWindow.gLayouts[i].setObjectName("gLayout_" + str(i + 1))
                 
-            for buttons in data['Menu'][0]['Buttons']:
+            for buttons in data['Menu'][i]['Buttons']:
                 # used count as hash function to get gridlayout_6
                 # row and column placement 
                 row = int(count/3)
