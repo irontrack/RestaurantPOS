@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+import datetime
 
 class user():
     def __init__(self,first_name,last_name,pin):
@@ -12,7 +12,7 @@ class user():
         newTableOrder = tableOrder(listIndex)
         self.tableOrder.append(newTableOrder)
         
-        
+#    menuItem: each object is a menu item
 class menuItem():
     def __init__(self, name, cost, index = 0):
         self.name = name
@@ -20,11 +20,22 @@ class menuItem():
         self.index = index
     def __str__(self):
         return '{0:=<20s}  {1:>5.2f}'.format(self.name,self.cost)
+
+#    tableOrder is a class that stores the order's owner, menuItems ordered, and several
+#    other important attributes for use by program 
 class tableOrder():
     def __init__(self, m_user):
         self.menuItems = []
+        self.timeOpened = str(datetime.datetime.now())
+        self.timeClosed = False
+        self.m_split = 1
+        self.m_table = 0
+        self.m_guests = 1
         self.m_user = m_user
         self.m_subTotal = 0
+    def close(self):
+        if not self.timeClosed:
+            self.timeClosed = str(datetime.datetime.now())
     def subTotal(self):
         return sum(m.cost for m in self.menuItems)
         
@@ -34,12 +45,12 @@ class tableOrder():
         
         
 if __name__ == "__main__":
-    newTableOrder = tableOrder(0)
-    for i in range(0,10):
-        newItem = menuItem("taco",4.00,i)
-        newTableOrder.add_menuItem(newItem)
-    cost = newTableOrder.subTotal()
-    print(cost)
+    u = user("jesse","harper",1234)
+    o = tableOrder(user)
+    o.close()
+    print(o.timeOpened)
+    print(o.timeClosed)
+  
         
         
         

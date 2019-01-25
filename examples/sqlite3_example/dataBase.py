@@ -19,7 +19,7 @@ class posDatabase():
         # Create users Table
         self.c.execute('''CREATE TABLE IF NOT EXISTS users (
             user_id integer PRIMARY KEY, 
-            password text NOT NULL,
+            pin text UNIQUE NOT NULL,
             first_name text NOT NULL,
             last_name text NOT NULL )
         
@@ -55,10 +55,10 @@ class posDatabase():
         self.conn.commit()
         
         # creates an items table for each menu item
-        self.c.execute('''CREATE TABLE IF NOT EXISTS items(
+        self.c.execute('''CREATE TABLE IF NOT EXISTS menu_items(
             item_id integer PRIMARY KEY,
             price real NOT NULL,
-            name text NOT NULL)
+            name text UNIQUE NOT NULL)
             ''')
         self.conn.commit()
         
@@ -67,22 +67,102 @@ class posDatabase():
     def addNewUser(self,u):
         if isinstance(u,user):
             self.c.execute('''INSERT INTO users(
-                password,first_name,last_name
+                pin,first_name,last_name
                 )
                 VALUES (?,?,?)
                 ''',(u.pin,u.first_name,u.last_name))
             self.conn.commit()
-    def getUsers(self):
+    def getAllUsers(self):
         self.c.execute(''' SELECT * FROM users
             ''')
         return self.c.fetchall()
-    
-if __name__ == '__main__':
-    db = posDatabase()
-    u = user("jesse", "harper", 123456)
-    db.addNewUser(u)
-    print(db.getUsers())
         
+    #    takes a user object and returns that user's user_id from the users table
+    def getUserId(self,userObject):
+        self.c.execute('''SELECT user_id FROM users 
+            WHERE pin =? 
+            ''',(userObject.pin,))
+        return self.c.fetchone()[0]
+    
+    #    takes a list of orders and adds each order and sale to the database
+    def addOrders(self,orders):
+        
+        for obj in orders:
+            self.c.execute('''INSERT INTO orders(
+                user_id,
+                table_number,
+                sales_subtotal,
+                time_opened,
+                time_closed,
+                split,
+                guest_count)
+                VALUES(?,?,?,?,?,?,?
+                )
+                ''',(self.getUserId(obj.m_user),
+                obj.m_table,
+                obj.m_subTotal,
+                obj.timeOpened,
+                obj.timeClosed,
+                obj.m_split,
+                obj.m_guests))
+            self.conn.commit()
+            # get last order_id
+            self.c.execute('''
+                SELECT max(order_id) FROM orders
+                ''')
+            order_id = self.c.fetchone()[0]
+            # insert all menu items sold into sales table
+            # **IMPORTANT** 
+            # ALL ITEMS MUST HAVE AN ID IN DATA BASE
+            for item in obj.menuItems:
+                self.c.execute('''SELECT item_id FROM menu_items
+                WHERE name = ?
+                    ''',(item.name,))
+                item_id = self.c.fetchone()[0]
+                self.c.execute('''INSERT INTO sales(
+                item_id,
+                order_id)
+                VALUES(?,?)
+                    
+                    ''',(item_id,order_id))
+                self.conn.commit()
+    
+    def addMenuItems(self,items):
+        for item in items:
+            try:
+                self.c.execute('''INSERT INTO menu_items(price,name)
+                    VALUES(?,?)
+                    ''',(item['cost'],item['name']))
+                self.conn.commit()
+            except:
+                return False
+        return True            
+        
+        
+if __name__ == '__main__':
+    
+    db = posDatabase()
+    db.c.execute('''INSERT INTO menu_items(price,name)
+        VALUES(0.99,"temp")
+        ''')
+    db.conn.commit()
+    u = user("jesse","harper",1243456)
+    db.addNewUser(u)
+    id = db.getUserId(u)
+    print(id)
+    t = tableOrder(u)
+    t.close()
+    for i in range(0,5):
+        item = menuItem("temp",0.99)
+        t.add_menuItem(item)
+    db.addOrders([t])
+    db.c.execute('''SELECT * FROM orders
+        ''')
+    print(db.c.fetchall())
+    db.c.execute('''SELECT * FROM sales
+        ''')
+    for q in db.c.fetchall():
+        print(q)    
     
 
 
