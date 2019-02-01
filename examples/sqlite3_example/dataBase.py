@@ -86,53 +86,56 @@ class posDatabase():
     
     #    takes a list of orders and adds each order and sale to the database
     def addOrders(self,orders):
-        
-        for obj in orders:
-            self.c.execute('''INSERT INTO orders(
-                user_id,
-                table_number,
-                sales_subtotal,
-                time_opened,
-                time_closed,
-                split,
-                guest_count)
-                VALUES(?,?,?,?,?,?,?
-                )
-                ''',(self.getUserId(obj.m_user),
-                obj.m_table,
-                obj.m_subTotal,
-                obj.timeOpened,
-                obj.timeClosed,
-                obj.m_split,
-                obj.m_guests))
-            self.conn.commit()
-            # get last order_id
-            self.c.execute('''
-                SELECT max(order_id) FROM orders
-                ''')
-            order_id = self.c.fetchone()[0]
-            # insert all menu items sold into sales table
-            # **IMPORTANT** 
-            # ALL ITEMS MUST HAVE AN ID IN DATA BASE
-            for item in obj.menuItems:
-                self.c.execute('''SELECT item_id FROM menu_items
-                WHERE name = ?
-                    ''',(item.name,))
-                item_id = self.c.fetchone()[0]
-                self.c.execute('''INSERT INTO sales(
-                item_id,
-                order_id)
-                VALUES(?,?)
-                    
-                    ''',(item_id,order_id))
+        try:
+            for obj in orders:
+                self.c.execute('''INSERT INTO orders(
+                    user_id,
+                    table_number,
+                    sales_subtotal,
+                    time_opened,
+                    time_closed,
+                    split,
+                    guest_count)
+                    VALUES(?,?,?,?,?,?,?
+                    )
+                    ''',(self.getUserId(obj.m_user),
+                    obj.m_table,
+                    obj.m_subTotal,
+                    obj.timeOpened,
+                    obj.timeClosed,
+                    obj.m_split,
+                    obj.m_guests))
                 self.conn.commit()
+                # get last order_id
+                self.c.execute('''
+                    SELECT max(order_id) FROM orders
+                    ''')
+                order_id = self.c.fetchone()[0]
+                # insert all menu items sold into sales table
+                # **IMPORTANT** 
+                # ALL ITEMS MUST HAVE AN ID IN DATA BASE
+                for item in obj.menuItems:
+                    self.c.execute('''SELECT item_id FROM menu_items
+                    WHERE name = ?
+                        ''',(item.name,))
+                    item_id = self.c.fetchone()[0]
+                    self.c.execute('''INSERT INTO sales(
+                    item_id,
+                    order_id)
+                    VALUES(?,?)
+                        
+                        ''',(item_id,order_id))
+                    self.conn.commit()
+        except:
+            return False
+        return True
     
     def addMenuItems(self,items):
         for item in items:
             try:
                 self.c.execute('''INSERT INTO menu_items(price,name)
                     VALUES(?,?)
-                    ''',(item['cost'],item['name']))
+                    ''',(item['cost'],item['itemName']))
                 self.conn.commit()
             except:
                 return False
