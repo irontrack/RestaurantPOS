@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from UiCore import Ui_MainWindow
+from UiCoreTest import Ui_MainWindow
 from dataFields import user,menuItem,tableOrder
 class UiFunctional(Ui_MainWindow):
     def __init__(self):
@@ -11,7 +11,7 @@ class UiFunctional(Ui_MainWindow):
         self.currentUser = None
         self.currentOrder = None
         self.modTable = False
-        
+        self.stackedWidget.setCurrentIndex(0)
         #connect user select push buttons
         self.toGoOrder_btn.clicked.connect(self.toGoOrder_pushed)
         self.newTable_btn.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(1))
@@ -33,27 +33,46 @@ class UiFunctional(Ui_MainWindow):
         self.enter_btn.clicked.connect(lambda:self.enter_pushed(self.lineEdit.text()))
         
         #connect order push buttons
+        import json
         
-        # connect appetizer buttons
-        self.appetizers_btn.clicked.connect(lambda:self.stackedWidget_2.setCurrentIndex(0))
-        self.Chips_btn.clicked.connect(lambda:self.addItem("Chips ",3.99))
-        self.Guacamole_btn.clicked.connect(lambda:self.addItem("Guacamole ",5.99))
-        self.Toastadas_btn.clicked.connect(lambda:self.addItem("Toastadas ",5.99))
-        # connect entrees buttons
-        self.entrees_btn.clicked.connect(lambda:self.stackedWidget_2.setCurrentIndex(1))
-        self.Burrito_btn.clicked.connect(lambda:self.addItem("Burrito", 8.99))
-        self.Tacos_btn.clicked.connect(lambda:self.addItem("Tacos", 6.99))
-        self.Salad_btn.clicked.connect(lambda:self.addItem("Salad", 8.99))
-        # connect drinks buttons
-        self.drinks_btn.clicked.connect(lambda:self.stackedWidget_2.setCurrentIndex(2))
-        self.Horchata_btn.clicked.connect(lambda:self.addItem("Horchata", 2.99))
-        self.Cerveza_btn.clicked.connect(lambda:self.addItem("Cerveza", 4.99))
-        self.Jarritos_btn.clicked.connect(lambda:self.addItem("Jarritos", 1.99))
-        #connect desserts buttons        
-        self.desserts_btn.clicked.connect(lambda:self.stackedWidget_2.setCurrentIndex(3))
-        self.Churro_btn.clicked.connect(lambda:self.addItem("Churro",2.99))
-        self.Flan_btn.clicked.connect(lambda:self.addItem("Flan",4.99))
-        #connect final order menu buttons
+        with open("defaultSettings.json") as f:
+            data = json.load(f)
+        for i in range(len(data['Menu'])):
+            if self.subMenus[i].objectName() == data['Menu'][i]["subMenu"] + "_btn":
+                print(self.subMenus[i].objectName(), i)
+                self.subMenus[i].clicked.connect(self.switchSubMenu(i))
+            for j in range(len(data['Menu'][i]['Buttons'])):
+                itemName = data['Menu'][i]['Buttons'][j]['itemName']
+                cost = data['Menu'][i]['Buttons'][j]['cost']
+                index = i*len(data['Menu'][i]['Buttons']) + j  
+                
+                button = self.appItems[index]
+                if button.objectName() == itemName +"_btn":
+                    func = self.makeFunc(itemName,cost)
+                    button.clicked.connect(func)
+                
+                
+        f.close()
+#         # connect appetizer buttons
+#         self.Appetizers_btn.clicked.connect(lambda:self.stackedWidget_2.setCurrentIndex(0))
+#         self.Chips_btn.clicked.connect(lambda:self.addItem("Chips ",3.99))
+#         self.Guacamole_btn.clicked.connect(lambda:self.addItem("Guacamole ",5.99))
+#         self.Toastadas_btn.clicked.connect(lambda:self.addItem("Toastadas ",5.99))
+#         # connect entrees buttons
+#         self.Entrees_btn.clicked.connect(lambda:self.stackedWidget_2.setCurrentIndex(1))
+#         self.Burrito_btn.clicked.connect(lambda:self.addItem("Burrito", 8.99))
+#         self.Tacos_btn.clicked.connect(lambda:self.addItem("Tacos", 6.99))
+#         self.Salad_btn.clicked.connect(lambda:self.addItem("Salad", 8.99))
+#         # connect drinks buttons
+#         self.Drinks_btn.clicked.connect(lambda:self.stackedWidget_2.setCurrentIndex(2))
+#         self.Horchata_btn.clicked.connect(lambda:self.addItem("Horchata", 2.99))
+#         self.Cerveza_btn.clicked.connect(lambda:self.addItem("Cerveza", 4.99))
+#         self.Jarritos_btn.clicked.connect(lambda:self.addItem("Jarritos", 1.99))
+#         #connect desserts buttons        
+#         self.desserts_btn.clicked.connect(lambda:self.stackedWidget_2.setCurrentIndex(3))
+#         self.Churro_btn.clicked.connect(lambda:self.addItem("Churro",2.99))
+#         self.Flan_btn.clicked.connect(lambda:self.addItem("Flan",4.99))
+#         #connect final order menu buttons
         self.CancelOrder_btn.clicked.connect(self.cancelOrder_pushed)
         self.finished_btn.clicked.connect(self.finished_pushed)
         self.remove_btn.clicked.connect(self.remove_pushed)
@@ -75,6 +94,10 @@ class UiFunctional(Ui_MainWindow):
             self.modTable = True
             for item in self.currentOrder.menuItems:
                 self.listWidget_2.addItem(str(item))
+            temp = self.currentOrder.subTotal()
+            self.listWidget_2.addItem("=========================")
+            self.listWidget_2.addItem(f"Sub-Total ======= {temp}")
+            
         
             
            
@@ -115,20 +138,32 @@ class UiFunctional(Ui_MainWindow):
         for u in self.m_users:
             if u.pin == pin:
                 return u
-    def addItem(self,m_name,m_cost):
-        index = self.listWidget_2.currentRow()
-        m_menuItem = menuItem(m_name,m_cost,index)
-        self.currentOrder.menuItems.append(m_menuItem)
-        self.listWidget_2.insertItem(index,str(m_menuItem))
-        self.listWidget_2.setCurrentRow(index + 1)
-        temp = self.currentOrder.subTotal()
-        if self.listWidget_2.count() == len(self.currentOrder.menuItems):
-            self.listWidget_2.addItem("=========================")
-            self.listWidget_2.addItem(f"Sub-Total ======= {temp}")
-        else:
-            index = self.listWidget_2.count() - 1
-            self.listWidget_2.takeItem(index)
-            self.listWidget_2.addItem(f"Sub-Total ======= {temp}") 
+            
+            
+    # the following two functions create taylor made, single use functions
+    # for use in the connect method. they are needed as lambdas cannot
+    # be used in loop connections
+    
+    def makeFunc(self,m_name,m_cost):
+        def addItem():
+            index = self.listWidget_2.currentRow()
+            m_menuItem = menuItem(m_name,m_cost,index)
+            self.currentOrder.menuItems.append(m_menuItem)
+            self.listWidget_2.insertItem(index,str(m_menuItem))
+            self.listWidget_2.setCurrentRow(index + 1)
+            temp = self.currentOrder.subTotal()
+            if self.listWidget_2.count() == len(self.currentOrder.menuItems):
+                self.listWidget_2.addItem("=========================")
+                self.listWidget_2.addItem(f"Sub-Total ======= {temp}")
+            else:
+                index = self.listWidget_2.count() - 1
+                self.listWidget_2.takeItem(index)
+                self.listWidget_2.addItem(f"Sub-Total ======= {temp}")
+        return addItem
+    def switchSubMenu(self,index):
+        def f():
+            self.stackedWidget_2.setCurrentIndex(index)
+        return f 
             
     def remove_pushed(self):    
         index = self.listWidget_2.currentRow()
