@@ -1,0 +1,72 @@
+{
+  "Menu": [
+    {
+      "subMenu": "Appetizers", 
+      "Buttons": [
+        {
+          "cost": 3.99, 
+          "itemName": "Chips"
+        }, 
+        {
+          "cost": 5.99, 
+          "itemName": "Guacamole"
+        }, 
+        {
+          "cost": 5.99, 
+          "itemName": "Toastadas"
+        }
+      ]
+    }, 
+    {
+      "subMenu": "Entrees", 
+      "Buttons": [
+        {
+          "cost": 5.99, 
+          "itemName": "Tacos"
+        }, 
+        {
+          "cost": 6.99, 
+          "itemName": "Burrito"
+        }, 
+        {
+          "cost": 5.99, 
+          "itemName": "Salad"
+        }
+      ]
+    }, 
+    {
+      "subMenu": "Drinks", 
+      "Buttons": [
+        {
+          "cost": 2.99, 
+          "itemName": "Horchata"
+        }, 
+        {
+          "cost": 5.99, 
+          "itemName": "Cerveza"
+        }, 
+        {
+          "cost": 1.99, 
+          "itemName": "Jaritos"
+        }
+      ]
+    }, 
+    {
+      "subMenu": "Desserts", 
+      "Buttons": [
+        {
+          "cost": 2.99, 
+          "itemName": "Churro"
+        }, 
+        {
+          "cost": 2.99, 
+          "itemName": "Flan"
+        }, 
+        {
+          "cost": 2.99, 
+          "itemName": "Cajeta"
+        }
+      ]
+    }
+  ]
+}

@@ -22,6 +22,8 @@ class Ui_MainWindow(object):
         font.setPointSize(14)
         self.stackedWidget.setFont(font)
         self.stackedWidget.setObjectName("stackedWidget")
+        
+        # start user select page
         self.user_select = QtWidgets.QWidget()
         self.user_select.setObjectName("user_select")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.user_select)
@@ -116,8 +118,10 @@ class Ui_MainWindow(object):
         self.frame_4.setObjectName("frame_4")
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.frame_4)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        
         self.verticalLayout_5 = QtWidgets.QVBoxLayout()
         self.verticalLayout_5.setObjectName("verticalLayout_5")
+       
         self.lineEdit = QtWidgets.QLineEdit(self.frame_4)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
