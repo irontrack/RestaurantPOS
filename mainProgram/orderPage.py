@@ -2,7 +2,7 @@ import json
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class orderWidget(QtWidgets.QWidget):
-    def setUp(self,mainWindow):
+    def setUp(self):
         with open('defaultSettings.json') as f:
             data = json.load(f)
         

@@ -16,7 +16,7 @@ class Ui_mainWindow(QtWidgets.QMainWindow):
         
         # add loginWidget
         self.loginWidget = loginWidget(self.stackedWidget)
-        self.loginWidget.setUp(self)
+        self.loginWidget.setUp()
         self.stackedWidget.addWidget(self.loginWidget)
         
         # add userSelectWidget
@@ -26,7 +26,7 @@ class Ui_mainWindow(QtWidgets.QMainWindow):
         
         # add orderWidget
         self.orderWidget = orderWidget(self.stackedWidget)
-        self.orderWidget.setUp(self)
+        self.orderWidget.setUp()
         self.stackedWidget.addWidget(self.orderWidget)
         
         self.stackedWidget.setCurrentIndex(2)
