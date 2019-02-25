@@ -8,15 +8,15 @@ class orderWidget(QtWidgets.QWidget):
         
         # create empty list of necessary objects for Items and Submenus
         
-        self.appItems = []
-        self.subMenus = []
-        self.menuWidgets = []
-        self.labelFrames = []
-        self.labels = []
-        self.vLayouts = []
-        self.hLayouts = []
-        self.gLayouts = []
-        self.menuFrames = []
+        self.appItems = {}
+        self.subMenus = {}
+        self.menuWidgets = {}
+        self.labelFrames = {}
+        self.labels = {}
+        self.vLayouts = {}
+        self.hLayouts = {}
+        self.gLayouts = {}
+        self.menuFrames = {}
         
         
         
@@ -34,7 +34,7 @@ class orderWidget(QtWidgets.QWidget):
         self.label = QtWidgets.QLabel(self.labelFrame)
         self.label.setObjectName("label")
         self.labelLayout.addWidget(self.label, 0, QtCore.Qt.AlignHCenter)
-        self.label.setText('Printers IN Kitchen')
+        self.label.setText('Printers In Networked Kitchens')
         self.mainLayout.addWidget(self.labelFrame)
         
         # set up mainFrame and mainFrameLayout
@@ -53,14 +53,14 @@ class orderWidget(QtWidgets.QWidget):
         self.subMenuLayout.setObjectName("subMenuLayout")
         self.menuNavLayout = QtWidgets.QVBoxLayout()
         self.menuNavLayout.setObjectName("menuNavLayout")
-        count = 0
+        
         for subMenus in data['Menu']:
             subMenu = subMenus['subMenu']
-            self.subMenus.append(QtWidgets.QPushButton(self.mainFrame))
-            self.subMenus[count].setObjectName(subMenu + "_btn")
-            self.subMenuLayout.addWidget(self.subMenus[count])
-            self.subMenus[count].setText(subMenu)
-            count += 1
+            self.subMenus[subMenu] = QtWidgets.QPushButton(self.mainFrame)
+            self.subMenus[subMenu].setObjectName(subMenu + "_btn")
+            self.subMenuLayout.addWidget(self.subMenus[subMenu])
+            self.subMenus[subMenu].setText(subMenu)
+            
         self.menuNavLayout.addLayout(self.subMenuLayout)
         
         # add core nav buttons
@@ -85,36 +85,36 @@ class orderWidget(QtWidgets.QWidget):
         self.stackedWidget.setObjectName("stackedWidget")
         
         count = 0
-        for i in range(0,len(data['Menu'])):
-            subMenu = data['Menu'][i]['subMenu']
-            self.menuWidgets.append(QtWidgets.QWidget())
-            self.menuWidgets[i].setObjectName(subMenu)
+        i = 0
+        for items in data['Menu']:
+            subMenu = items['subMenu']
+            self.menuWidgets[subMenu] = QtWidgets.QWidget()
+            self.menuWidgets[subMenu].setObjectName(subMenu + "SubWidget")
+            self.vLayouts[subMenu] = QtWidgets.QVBoxLayout(self.menuWidgets[subMenu])
+            self.vLayouts[subMenu].setObjectName(subMenu + "VLayout" )
             
-            self.vLayouts.append(QtWidgets.QVBoxLayout(self.menuWidgets[i]))
-            self.vLayouts[i].setObjectName("labelLayout_" + str(i + 1))
+            self.labelFrames[subMenu] = QtWidgets.QFrame(self.menuWidgets[subMenu])
+            self.labelFrames[subMenu].setFrameShape(QtWidgets.QFrame.StyledPanel)
+            self.labelFrames[subMenu].setFrameShadow(QtWidgets.QFrame.Raised)
+            self.labelFrames[subMenu].setObjectName(subMenu + "LabelFrame")
             
-            self.labelFrames.append(QtWidgets.QFrame(self.menuWidgets[i]))
-            self.labelFrames[i].setFrameShape(QtWidgets.QFrame.StyledPanel)
-            self.labelFrames[i].setFrameShadow(QtWidgets.QFrame.Raised)
-            self.labelFrames[i].setObjectName("labelFrame_" + str(i + 1))
+            self.hLayouts[subMenu] = QtWidgets.QHBoxLayout(self.labelFrames[subMenu])
+            self.hLayouts[subMenu].setObjectName(subMenu + "LabelLayout")
             
-            self.hLayouts.append(QtWidgets.QHBoxLayout(self.labelFrames[i]))
-            self.hLayouts[i].setObjectName("labelLayout_" + str(i + 1))
+            self.labels[subMenu] = QtWidgets.QLabel(self.labelFrames[subMenu])
+            self.labels[subMenu].setObjectName(subMenu + "Label")
+            self.labels[subMenu].setText(subMenu)
             
-            self.labels.append(QtWidgets.QLabel(self.labelFrames[i]))
-            self.labels[i].setObjectName(subMenu + "_" + str(i + 1))
-            self.labels[i].setText(subMenu)
+            self.hLayouts[subMenu].addWidget(self.labels[subMenu], 0, QtCore.Qt.AlignHCenter)
+            self.vLayouts[subMenu].addWidget(self.labelFrames[subMenu])
             
-            self.hLayouts[i].addWidget(self.labels[i], 0, QtCore.Qt.AlignHCenter)
-            self.vLayouts[i].addWidget(self.labelFrames[i])
+            self.menuFrames[subMenu] = QtWidgets.QFrame(self.menuWidgets[subMenu])
+            self.menuFrames[subMenu].setFrameShape(QtWidgets.QFrame.StyledPanel)
+            self.menuFrames[subMenu].setFrameShadow(QtWidgets.QFrame.Raised)
+            self.menuFrames[subMenu].setObjectName(subMenu + "MenuFrame")
             
-            self.menuFrames.append(QtWidgets.QFrame(self.menuWidgets[i]))
-            self.menuFrames[i].setFrameShape(QtWidgets.QFrame.StyledPanel)
-            self.menuFrames[i].setFrameShadow(QtWidgets.QFrame.Raised)
-            self.menuFrames[i].setObjectName("menuFrame_" + str(i + 1))
-            
-            self.gLayouts.append(QtWidgets.QGridLayout(self.menuFrames[i]))
-            self.gLayouts[i].setObjectName("gLayout_" + str(i + 1))
+            self.gLayouts[subMenu] = QtWidgets.QGridLayout(self.menuFrames[subMenu])
+            self.gLayouts[subMenu].setObjectName(subMenu + "GLayout")
                 
             for buttons in data['Menu'][i]['Buttons']:
                 # used count as hash function to get gridlayout_6
@@ -123,23 +123,33 @@ class orderWidget(QtWidgets.QWidget):
                 col = count % 3  
                 
                 name = buttons['itemName']
-                tempWidget = QtWidgets.QPushButton(self.menuFrames[i])
+                tempWidget = QtWidgets.QPushButton(self.menuFrames[subMenu])
                 tempWidget.setObjectName(name + '_btn')
                 tempWidget.setText(name)
-                self.gLayouts[i].addWidget(tempWidget,row,col,1,1)
-                self.appItems.append(tempWidget)
+                self.gLayouts[subMenu].addWidget(tempWidget,row,col,1,1)
+                self.appItems[name] = tempWidget
                 count += 1
     # end?
-            self.vLayouts[i].addWidget(self.menuFrames[i])
-            self.vLayouts[i].setStretch(0, 1)
-            self.vLayouts[i].setStretch(1, 9)
-            self.stackedWidget.addWidget(self.menuWidgets[i])
+            self.vLayouts[subMenu].addWidget(self.menuFrames[subMenu])
+            self.vLayouts[subMenu].setStretch(0, 1)
+            self.vLayouts[subMenu].setStretch(1, 9)
+            self.stackedWidget.addWidget(self.menuWidgets[subMenu])
+            i += 1
+            
+        # end button assignments
+        
         self.mainFrameLayout.addWidget(self.stackedWidget)
         self.mainFrameLayout.setStretch(0, 2)
         self.mainFrameLayout.setStretch(1, 1)
         self.mainFrameLayout.setStretch(2, 3)
         self.mainLayout.addWidget(self.mainFrame)
             
-            
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    ui = orderWidget()
+    ui.setUp()
+    ui.show()
+    sys.exit(app.exec_())               
             
             
