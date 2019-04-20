@@ -6,10 +6,7 @@ class user():
         self.last_name = last_name
         self.administrator = admin
         self.pin = pin
-        self.tableOrders = []
-    def add_tableOrder(self,listIndex):
-        newTableOrder = tableOrder(listIndex)
-        self.tableOrder.append(newTableOrder)
+    
         
 #    menuItem: each object is a menu item
 class menuItem():
@@ -32,6 +29,7 @@ class tableOrder():
         self.m_guests = 1
         self.m_user = m_user
         self.m_subTotal = 0
+        self.orderNumber = 0
     def close(self):
         if not self.timeClosed:
             self.timeClosed = str(datetime.datetime.now())

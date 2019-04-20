@@ -1,13 +1,13 @@
 import json
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from dataFields import menuItem
 class orderWidget(QtWidgets.QWidget):
     def setUp(self):
         with open('defaultSettings.json') as f:
             data = json.load(f)
         
         # create empty list of necessary objects for Items and Submenus
-        
+        self.currentOrder = None
         self.appItems = {}
         self.subMenus = {}
         self.menuWidgets = {}
@@ -123,17 +123,20 @@ class orderWidget(QtWidgets.QWidget):
                 col = count % 3  
                 
                 name = buttons['itemName']
+                cost = buttons['cost']
                 tempWidget = QtWidgets.QPushButton(self.menuFrames[subMenu])
                 tempWidget.setObjectName(name + '_btn')
                 tempWidget.setText(name)
                 self.gLayouts[subMenu].addWidget(tempWidget,row,col,1,1)
                 self.appItems[name] = tempWidget
+                self.appItems[name].clicked.connect(self.addMenuItem(name,cost))
                 count += 1
     # end?
             self.vLayouts[subMenu].addWidget(self.menuFrames[subMenu])
             self.vLayouts[subMenu].setStretch(0, 1)
             self.vLayouts[subMenu].setStretch(1, 9)
             self.stackedWidget.addWidget(self.menuWidgets[subMenu])
+            self.subMenus[subMenu].clicked.connect(self.changeMenu(i))
             i += 1
             
         # end button assignments
@@ -143,7 +146,32 @@ class orderWidget(QtWidgets.QWidget):
         self.mainFrameLayout.setStretch(1, 1)
         self.mainFrameLayout.setStretch(2, 3)
         self.mainLayout.addWidget(self.mainFrame)
+    def showOrder(self,m_order):
+        self.listWidget.clear()
+        for item in m_order.menuItems:
+            self.listWidget.addItem(str(item))
+        self.listWidget.addItem('='*20)
+        
+        self.listWidget.addItem(str(m_order.subTotal()))
+    def changeMenu(self,i):
+        menu = self
+        def f(self):
             
+            menu.stackedWidget.setCurrentIndex(i)
+        
+        return f
+            
+    def addMenuItem(self,name, cost):
+        
+        def f():
+            # create new menuItem
+            newItem = menuItem(name,cost)
+            # add Item to order
+            self.currentOrder.menuItems.append(newItem)
+            # put item on listWidget
+            self.showOrder(self.currentOrder)
+            
+        return f
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
