@@ -123,19 +123,19 @@ class loginWidget(QtWidgets.QWidget):
         self.buttons["enter_btn"].setText('Enter')
         self.buttonLayout.addWidget(self.buttons["enter_btn"],3,2,1,1)
         
-        # add cancel button
-        self.buttons["cancel_btn"] = QtWidgets.QPushButton(self.textEditFrame)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.buttons["cancel_btn"].sizePolicy().hasHeightForWidth())
-        self.buttons["cancel_btn"].setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(18)
-        self.buttons["cancel_btn"].setFont(font)
-        self.buttons["cancel_btn"].setObjectName("cancel_btn")
-        self.buttons["cancel_btn"].setText('cancel')
-        self.buttonLayout.addWidget(self.buttons["cancel_btn"],4,1,1,1)
+#         # add cancel button
+#         self.buttons["cancel_btn"] = QtWidgets.QPushButton(self.textEditFrame)
+#         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
+#         sizePolicy.setHorizontalStretch(0)
+#         sizePolicy.setVerticalStretch(0)
+#         sizePolicy.setHeightForWidth(self.buttons["cancel_btn"].sizePolicy().hasHeightForWidth())
+#         self.buttons["cancel_btn"].setSizePolicy(sizePolicy)
+#         font = QtGui.QFont()
+#         font.setPointSize(18)
+#         self.buttons["cancel_btn"].setFont(font)
+#         self.buttons["cancel_btn"].setObjectName("cancel_btn")
+#         self.buttons["cancel_btn"].setText('cancel')
+#         self.buttonLayout.addWidget(self.buttons["cancel_btn"],4,1,1,1)
         
         # add buttonLayout to textEditLayout
         self.textEditLayout.addLayout(self.buttonLayout)

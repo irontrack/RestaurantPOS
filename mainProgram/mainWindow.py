@@ -28,12 +28,12 @@ class Ui_mainWindow(QtWidgets.QMainWindow):
         
         # add userSelectWidget
         self.userSelectWidget = userSelectWidget(self.stackedWidget)
-        self.userSelectWidget.setUp()
+        self.userSelectWidget.setUp(self)
         self.stackedWidget.addWidget(self.userSelectWidget)
         
         # add orderWidget
         self.orderWidget = orderWidget(self.stackedWidget)
-        self.orderWidget.setUp()
+        self.orderWidget.setUp(self)
         self.stackedWidget.addWidget(self.orderWidget)
         
         self.stackedWidget.setCurrentIndex(0)
@@ -52,12 +52,18 @@ class Ui_mainWindow(QtWidgets.QMainWindow):
             
         #connect login page buttons
         self.loginWidget.buttons["enter_btn"].clicked.connect(self.login)
+        
+        
         #connect userSelectWidget Buttons
         #connect newOrder button
         self.userSelectWidget.newTable_btn.clicked.connect(self.newTable)
         #connect modTable button
         self.userSelectWidget.modTable_btn.clicked.connect(self.modTable)
         #connect editOrder button
+        
+        #connect OrderWidget buttons
+        self.orderWidget.finished_btn.clicked.connect(self.finishedOrder)
+    # definition for login page funcitonality    
     def login(self):
         # get lineEdit text
         pin = self.loginWidget.lineEdit.text()
@@ -71,21 +77,21 @@ class Ui_mainWindow(QtWidgets.QMainWindow):
                 
                 if person.pin == pin:
                     # if match found, switch screen to appropriate page
-                    self.loginWidget.lineEdit.clear()
+                    self.loginWidget.clearEdit()
                     self.stackedWidget.setCurrentIndex(1)
                     self.currentUser = person
                     # for each openOrder attached to user, display
-                    for table in self.openOrders:
-                        if table.m_user.pin == pin:
-                            self.userSelectWidget.listWidget.append(str(table))
+                    self.showTables()
                     # if admin is true, connect buttons for editing default settings
+                    break
                 else:
                     # else pop up message box "invalid pin"
                     QtWidgets.QMessageBox.about(self,"Error","Invalid input: please try again")
-                    self.loginWidget.lineEdit.clear()
+                    self.loginWidget.clearEdit()
                     
     # definitions for the user selection screen buttons
     
+        
     def newTable(self):
         self.stackedWidget.setCurrentIndex(2)
         self.orderWidget.currentOrder = tableOrder(self.currentUser)           
@@ -95,15 +101,27 @@ class Ui_mainWindow(QtWidgets.QMainWindow):
         # get order index
         i = self.userSelectWidget.listWidget.currentRow()
         # use index to load order to orderWidget.currentOrder
-        self.orderWidget.currentOrder = self.openOrders(i)
+        self.orderWidget.currentOrder = self.openOrders[i]
         # show order
         self.orderWidget.showOrder(self.orderWidget.currentOrder)
         # change page
-        self.stackedWidget.secCurrentIndex(2)
+        self.stackedWidget.setCurrentIndex(2)
     def showTables(self):
         self.userSelectWidget.listWidget.clear()
         for table in self.openOrders:
-            info = "Order Number " + str(table.orderNumber) + "     Server: " + table.m_user.name 
-            self.userSelectWidget.listWidget.addItem(info)
-            
+            if table.m_user == self.currentUser or self.currentUser.administrator:
+                
+                info = "Order Number " + str(table.orderNumber) + "   Server: " + table.m_user.first_name 
+                self.userSelectWidget.listWidget.addItem(info)
+    
+    # definitions for the order page buttons
+    def finishedOrder(self):
+        #note: needs to be modified to fix bug for modifying orders... appends same order again
+        self.openOrders.append(self.orderWidget.currentOrder)
+        self.orderWidget.currentOrder = None
+        self.orderWidget.listWidget.clear()
+        # show orders
+        self.showTables()
+        self.stackedWidget.setCurrentIndex(1)
+        
             

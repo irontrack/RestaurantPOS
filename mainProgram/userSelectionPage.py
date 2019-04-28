@@ -1,7 +1,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class userSelectWidget(QtWidgets.QWidget):
-    def setUp(self):
+    def setUp(self,parrent):
+        self.mainWidget = parrent
         # set up widget size policy
         
         self.setObjectName('userSelectWidget')
@@ -84,10 +85,30 @@ class userSelectWidget(QtWidgets.QWidget):
         self.toGoOrders_btn.setText('To GO Orders')
         self.menuLayout.addWidget(self.toGoOrders_btn)
         
+        # Close order button
+        self.closeOrder_btn = QtWidgets.QPushButton(self.mainFrame)
+        self.closeOrder_btn.setSizePolicy(sizePolicy)
+        self.closeOrder_btn.setObjectName("closeOrder_btn")
+        self.closeOrder_btn.setText('Close Order')
+        self.menuLayout.addWidget(self.closeOrder_btn)
+        
+        # exit user selection screen button set up
+        self.exit_btn = QtWidgets.QPushButton(self.mainFrame)
+        self.exit_btn.setSizePolicy(sizePolicy)
+        self.exit_btn.setObjectName("exit_btn")
+        self.exit_btn.setText("Exit")
+        self.exit_btn.clicked.connect(self.exit)
+        self.menuLayout.addWidget(self.exit_btn)
+        
+        
         self.mainFrameLayout.addLayout(self.menuLayout)
         
         #add mainFrame to mainLayout
         self.mainLayout.addWidget(self.mainFrame)
+    # button functions
+    def exit(self):
+        self.listWidget.clear()
+        self.mainWidget.stackedWidget.setCurrentIndex(0)
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)

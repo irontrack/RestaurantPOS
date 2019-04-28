@@ -2,7 +2,7 @@ import json
 from PyQt5 import QtCore, QtGui, QtWidgets
 from dataFields import menuItem
 class orderWidget(QtWidgets.QWidget):
-    def setUp(self):
+    def setUp(self,parrent):
         with open('defaultSettings.json') as f:
             data = json.load(f)
         
@@ -17,7 +17,7 @@ class orderWidget(QtWidgets.QWidget):
         self.hLayouts = {}
         self.gLayouts = {}
         self.menuFrames = {}
-        
+        self.mainWidget = parrent
         
         
         # set up widget
@@ -71,7 +71,12 @@ class orderWidget(QtWidgets.QWidget):
         self.menuNavLayout.addWidget(self.remove_btn)
         self.CancelOrder_btn = QtWidgets.QPushButton(self.mainFrame)
         self.CancelOrder_btn.setObjectName("CancelOrder_btn")
+        self.CancelOrder_btn.clicked.connect(self.cancelOrder)
         self.menuNavLayout.addWidget(self.CancelOrder_btn)
+        self.closeOrder_btn = QtWidgets.QPushButton(self.mainFrame)
+        self.closeOrder_btn.setObjectName("closeOrder_btn")
+        self.closeOrder_btn.setText("Close Order")
+        self.menuNavLayout.addWidget(self.closeOrder_btn)
         self.finished_btn = QtWidgets.QPushButton(self.mainFrame)
         self.finished_btn.setObjectName("finished_btn")
         self.menuNavLayout.addWidget(self.finished_btn)
@@ -146,6 +151,9 @@ class orderWidget(QtWidgets.QWidget):
         self.mainFrameLayout.setStretch(1, 1)
         self.mainFrameLayout.setStretch(2, 3)
         self.mainLayout.addWidget(self.mainFrame)
+        
+    # define methods    
+        
     def showOrder(self,m_order):
         self.listWidget.clear()
         for item in m_order.menuItems:
@@ -172,6 +180,10 @@ class orderWidget(QtWidgets.QWidget):
             self.showOrder(self.currentOrder)
             
         return f
+    def cancelOrder(self):
+        self.currentOrder = None
+        self.listWidget.clear()
+        self.mainWidget.stackedWidget.setCurrentIndex(1)
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
